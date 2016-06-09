@@ -29,6 +29,8 @@ public class Player {
 		return 0;
 	}	
 	public void printDieVals() {
-		System.out.println("lol internet");
+		System.out.println("Die 1 = " + lastRoll[0]);
+		System.out.println("Die 2 = " + lastRoll[1]);
+		System.out.println("Die 3 = " + lastRoll[2]);
 	}
 }

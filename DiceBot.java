@@ -6,9 +6,16 @@ public class DiceBot {
 	boolean isHigh;
 	int playerTurn;
 	int numPlayers;
-	ArrayList<Player> players;
+	static ArrayList<Player> players;
 	Player curPlayer;
 	public static void main(String []args) {
-		System.out.println("fuck");
+		players = new ArrayList<Player>();
+		Player p = new Player();
+		players.add(p);
+		p.rollDice();
+		players.get(0).printDieVals();
+		System.out.println("---------------");
+		players.get(0).rollDice();
+		players.get(0).printDieVals();
 	}
 }
