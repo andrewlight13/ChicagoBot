@@ -1,4 +1,4 @@
-package discordbot;
+package projectdicecord;
 
 import java.util.*;
 
