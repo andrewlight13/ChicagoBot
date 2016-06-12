@@ -14,14 +14,20 @@ public class DiceBot {
 		players.add(p);
 		p.rollDice();
 		players.get(0).printDieVals();
+		System.out.println(p.isSpecial());
 		System.out.println("---------------");
 		players.get(0).rollDice();
 		players.get(0).printDieVals();
+		System.out.println(p.isSpecial());
 		System.out.println("---------------");
 		players.get(0).rollDice(Reroll.IOO);
 		players.get(0).printDieVals();
+		System.out.println(p.isSpecial());
 		System.out.println("---------------");
 		players.get(0).rollDice(Reroll.OII);
 		players.get(0).printDieVals();
+		
+		System.out.println(p.isSpecial());
+		
 	}
 }

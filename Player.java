@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Player {
 	private int lives;	//add getter/setter/dedicated decrement function
-	private int[] lastRoll;	//maybe make this an ordered list
+	public int[] lastRoll;	//maybe make this an ordered list
 	Player(){
 		lastRoll = new int[3];
 		lives = 3;
@@ -45,7 +45,47 @@ public class Player {
 				break;
 		}
 	} 
-	private int isSpecial() {				//checks current contents of lastRoll, should be run every time you roll, 0 = not special, 1 = pair of 6, 2 = "165" 3 = chicago
+	public int isSpecial() {				
+		//checks current contents of lastRoll, should be run every time you roll, 
+		//0 = not special, 1 = pair of 6, 2 = triple of 6, 3 = "165" , 4 = chicago,
+		
+		boolean[] is165 = {true, true, true};
+		int is165_c = 0;
+		int isMulti6_c = 0;
+		int isChicago_c = 0;
+				
+		for(int i: lastRoll)
+		{				
+			if(i == 1)
+			{
+				isChicago_c++;
+				if(is165[0] == true)
+				{
+					is165[0] = false;
+					is165_c++;
+				}
+			}
+			if(i == 6)
+			{
+				isMulti6_c++;
+				if(is165[1] == true)
+				{
+					is165[1] = false;
+					is165_c++;
+				}
+			}
+			if(i == 5 && is165[2] == true)
+			{
+				is165[2] = false;
+				is165_c++;
+			}				
+		}
+		
+		if(isChicago_c == 3) return 4;
+		if(is165_c == 3) return 3;
+		if(isMulti6_c == 3) return 2;
+		if(isMulti6_c == 2) return 1;
+		
 		return 0;	//NO ONE IS SPECIAL (implement this lol)
 	} 	
 	public int getScore(boolean isHigh) {		//get round score
