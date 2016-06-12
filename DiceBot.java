@@ -17,5 +17,11 @@ public class DiceBot {
 		System.out.println("---------------");
 		players.get(0).rollDice();
 		players.get(0).printDieVals();
+		System.out.println("---------------");
+		players.get(0).rollDice(Reroll.IOO);
+		players.get(0).printDieVals();
+		System.out.println("---------------");
+		players.get(0).rollDice(Reroll.OII);
+		players.get(0).printDieVals();
 	}
 }
