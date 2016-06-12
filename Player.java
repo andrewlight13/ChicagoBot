@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Player {
 	private int lives;	//add getter/setter/dedicated decrement function
-	public int[] lastRoll;	//maybe make this an ordered list
+	private int[] lastRoll;	//maybe make this an ordered list
 	Player(){
 		lastRoll = new int[3];
 		lives = 3;
@@ -88,11 +88,30 @@ public class Player {
 		
 		return 0;	//NO ONE IS SPECIAL (implement this lol)
 	} 	
-	public int getScore(boolean isHigh) {		//get round score
-		if(isSpecial() > 0){		//also need to check isHigh obviously
-			return 1;
+	public int getScore(boolean isHigh) 
+	{	//get round score
+		//also need to check isHigh obviously
+		int sum = 0;
+		if(isSpecial() > 2)
+		{		
+			return -1;
 		}
-		return 0;
+		if(isHigh == true)
+		{
+			for(int i: lastRoll)
+			{
+				if(i == 1) sum += 100;
+				else if(i == 6) sum += 60;
+				else sum += i;
+			}
+			return sum;
+		}
+		else
+		{
+			for(int i: lastRoll)
+				sum += i;
+			return sum;
+		}
 	}	
 	public void printDieVals() {
 		System.out.println("Die 1 = " + lastRoll[0]);
