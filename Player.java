@@ -40,6 +40,9 @@ public class Player {
 				lastRoll.clear();
 				rolls++;
 				break;
+			default:
+				System.out.println("rolling no dice, you shouldn't be able to reach this");
+				break;
 		}
 	} 
 	public int isSpecial() {				
