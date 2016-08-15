@@ -4,49 +4,46 @@ import java.util.*;
 
 public class Player {
 	private int lives;	//add getter/setter/dedicated decrement function
-	private int[] lastRoll;	//maybe make this an ordered list
+	private ArrayList<Integer> lastRoll;	//maybe make this an ordered list
+	private ArrayList<Integer> selected;
+	private int rolls;
+	
 	Player(){
-		lastRoll = new int[3];
+		lastRoll = new ArrayList<Integer>();
+		selected = new ArrayList<Integer>();
 		lives = 3;
+		rolls = 0;
 	}
 	
-	public void rollDice() {
+	public void rollDice() {			//this will be for (re-)rolling, not sure what we should do for parameters just yet
 		Random r = new Random();
-		lastRoll[0] = r.nextInt(6) + 1;		//random int from 0-5, plus 1 to get 0-6
-		lastRoll[1] = r.nextInt(6) + 1;
-		lastRoll[2] = r.nextInt(6) + 1;
-	} 
-	public void rollDice(Reroll die) {			//this will be for re-rolling, not sure what we should do for parameters just yet
-		Random r = new Random();
-		switch  (die){
-			case OOO:
+		switch  (selected.size()){
+			case 0:
+				lastRoll.clear();
+				lastRoll.add(r.nextInt(6) + 1);
+				lastRoll.add(r.nextInt(6) + 1);
+				lastRoll.add(r.nextInt(6) + 1);
+				rolls++;
 				break;
-			case OOI:
-				lastRoll[2] = r.nextInt(6) + 1;
+			case 1:
+				lastRoll.clear();
+				lastRoll.add(r.nextInt(6) + 1);
+				lastRoll.add(r.nextInt(6) + 1);
+				rolls++;
 				break;
-			case OIO:
-				lastRoll[1] = r.nextInt(6) + 1;
+			case 2:
+				lastRoll.clear();
+				lastRoll.add(r.nextInt(6) + 1);
+				rolls++;
 				break;
-			case OII:
-				lastRoll[1] = r.nextInt(6) + 1;
-				lastRoll[2] = r.nextInt(6) + 1;
-				break;
-			case IOO:
-				lastRoll[0] = r.nextInt(6) + 1;
-				break;
-			case IOI:
-				lastRoll[0] = r.nextInt(6) + 1;
-				lastRoll[2] = r.nextInt(6) + 1;
-				break;
-			case III:
-				lastRoll[0] = r.nextInt(6) + 1;
-				lastRoll[1] = r.nextInt(6) + 1;
-				lastRoll[2] = r.nextInt(6) + 1;
+			case 3:
+				lastRoll.clear();
+				rolls++;
 				break;
 		}
 	} 
 	public int isSpecial() {				
-		//checks current contents of lastRoll, should be run every time you roll, 
+		//checks current contents of lastRoll & selected, should be run every time you roll, 
 		//0 = not special, 1 = pair of 6, 2 = triple of 6, 3 = "165" , 4 = chicago,
 		
 		boolean[] is165 = {true, true, true};
@@ -55,6 +52,33 @@ public class Player {
 		int isChicago_c = 0;
 				
 		for(int i: lastRoll)
+		{				
+			if(i == 1)
+			{
+				isChicago_c++;
+				if(is165[0] == true)
+				{
+					is165[0] = false;
+					is165_c++;
+				}
+			}
+			if(i == 6)
+			{
+				isMulti6_c++;
+				if(is165[1] == true)
+				{
+					is165[1] = false;
+					is165_c++;
+				}
+			}
+			if(i == 5 && is165[2] == true)
+			{
+				is165[2] = false;
+				is165_c++;
+			}				
+		}
+		
+		for(int i: selected)
 		{				
 			if(i == 1)
 			{
@@ -112,14 +136,57 @@ public class Player {
 				sum += i;
 			return sum;
 		}
-	}	
+	}
+	
+	public void selectDie(int num)
+	{
+		if(lastRoll.contains(num))
+		{
+			selected.add(num);
+			lastRoll.remove(lastRoll.indexOf(num));
+		}
+		
+	}
+	
+	public void deselectDie(int num)
+	{
+		lastRoll.add(num);
+		selected.remove(selected.indexOf(num));
+	}
+	
+	public void endRoll()
+	{
+		if(rolls < 4)
+		{
+			rollDice();
+		}
+		else
+			endTurn();
+	}
+	
+	public void endTurn()
+	{
+		selected.clear();
+		rolls = 0;
+	}
+	
 	public void printDieVals() {
-		System.out.println("Die 1 = " + lastRoll[0]);
-		System.out.println("Die 2 = " + lastRoll[1]);
-		System.out.println("Die 3 = " + lastRoll[2]);
+		System.out.println("Dice from cup: ");
+		for(int i: lastRoll)
+		{
+			if( i != 0)
+			System.out.println(i);
+		}
+		System.out.println("Dice selected: ");
+		for(int i: selected)
+		{
+			if( i != 0)
+			System.out.println(i);
+		}
 	}
 }
 
 enum Reroll{		//should probably put this in its own file, but doesn't matter too much lol
+					//is kinda useless now i think ???
 	OOO, OOI, OIO, OII, IOO, IOI, III
 }
