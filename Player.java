@@ -16,7 +16,7 @@ public class Player {
 	}
 	
 	public void rollDice() {			//this will be for (re-)rolling, not sure what we should do for parameters just yet
-		Random r = new Random();
+		Random r = new Random(65);	//random value of "5" for double 6 testing
 		switch  (selected.size()){
 			case 0:
 				lastRoll.clear();
@@ -44,7 +44,14 @@ public class Player {
 				System.out.println("rolling no dice, you shouldn't be able to reach this");
 				break;
 		}
-	} 
+	}
+	public void cheat(){	//temporary cheater method, makes testing WAY easier
+		lastRoll.clear();
+		selected.clear();
+		lastRoll.add(6);
+		lastRoll.add(6);
+		selected.add(6);
+	}
 	public int isSpecial() {				
 		//checks current contents of lastRoll & selected, should be run every time you roll, 
 		//0 = not special, 1 = pair of 6, 2 = triple of 6, 3 = "165" , 4 = chicago,
@@ -114,7 +121,45 @@ public class Player {
 		if(isMulti6_c == 2) return 1;
 		
 		return 0;	//NO ONE IS SPECIAL (implement this lol)
-	} 	
+	}
+	public boolean multiSix(int assign){
+		int counter = 0;
+		//System.out.print("multisix called: ");
+		if((isSpecial() == 2 || isSpecial() == 1) && assign == 2){	//assign = 2 -> pull 2 dice
+			//System.out.print("entered main if");
+			while(counter < 2){
+				if(lastRoll.indexOf(6) == -1){
+					selected.remove(selected.indexOf(6));
+					counter++;
+				}
+				else{
+					lastRoll.remove(lastRoll.indexOf(6));
+					counter++;
+				}
+			}
+			selected.add(1);
+			printDieVals();
+			return true;
+		}
+		else if(isSpecial() == 2 && assign == 3){	//assign = 3 -> pull 3 dice
+			//System.out.print("entered main if");
+			while(counter < 3){
+				if(lastRoll.indexOf(6) == -1){
+					selected.remove(selected.indexOf(6));
+					counter++;
+				}
+				else{
+					lastRoll.remove(lastRoll.indexOf(6));
+					counter++;
+				}
+			}
+			selected.add(1);
+			selected.add(1);
+			printDieVals();
+			return true;
+		}
+		return false;
+	}
 	public int getScore(boolean isHigh) 
 	{	//get round score
 		//also need to check isHigh obviously
@@ -131,11 +176,19 @@ public class Player {
 				else if(i == 6) sum += 60;
 				else sum += i;
 			}
+			for(int i: selected)
+			{
+				if(i == 1) sum += 100;
+				else if(i == 6) sum += 60;
+				else sum += i;
+			}
 			return sum;
 		}
 		else
 		{
 			for(int i: lastRoll)
+				sum += i;
+			for(int i: selected)
 				sum += i;
 			return sum;
 		}
@@ -174,13 +227,13 @@ public class Player {
 	}
 	
 	public void printDieVals() {
-		System.out.println("Dice from cup: ");
+		if(!lastRoll.isEmpty()) System.out.println("Dice from cup: ");
 		for(int i: lastRoll)
 		{
 			if( i != 0)
 			System.out.println(i);
 		}
-		System.out.println("Dice selected: ");
+		if(!selected.isEmpty()) System.out.println("Dice selected: ");
 		for(int i: selected)
 		{
 			if( i != 0)
