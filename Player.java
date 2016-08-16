@@ -13,7 +13,7 @@ public class Player {
 	Player(){
 		lastRoll = new ArrayList<Integer>();
 		selected = new ArrayList<Integer>();
-		lives = 3;
+		lives = 3; //FUCK
 		rolls = 0;
 		score = 0;
 		diceFormat[1][0] = "┌───────┐";
