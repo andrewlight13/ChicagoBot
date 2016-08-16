@@ -17,34 +17,9 @@ public class DiceBot {
 		p.rollDice();
 		players.get(0).printDieVals();
 		players.get(0).selectDie(6);
-		players.get(0).printDieVals();
-		players.get(0).cheat();
-		players.get(0).printDieVals();
-		System.out.println("------multisix-----");
-		players.get(0).multiSix(3);
-		//System.out.println("SCORE:");
-		//System.out.println(players.get(0).getScore(true));
-		//System.out.println(players.get(0).getScore(false));
-		System.out.println("Is Special: " + p.isSpecial());
-		players.get(0).endRoll();
-		System.out.println("---------------");
-		/*players.get(0).rollDice();
-		players.get(0).printDieVals();
-		players.get(0).selectDie(6);
-		players.get(0).printDieVals();
-		System.out.println("Is Special: " + p.isSpecial());
-		System.out.println("MULTISIX TESTING:");
-		players.get(0).multiSix(2);
-		players.get(0).endRoll();
-		System.out.println("---------------");
-		players.get(0).rollDice();
-		players.get(0).printDieVals();
-		players.get(0).selectDie(6);
-		players.get(0).printDieVals();
-		System.out.println("Is Special: " + p.isSpecial());
-		players.get(0).endRoll();
-		System.out.println("---------------");*/
-		
+		players.get(0).endTurn(true);
+		System.out.println("SCORE:");
+		System.out.println(players.get(0).score);		
 		
 	}
 }

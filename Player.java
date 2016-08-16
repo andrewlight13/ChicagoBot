@@ -8,11 +8,14 @@ public class Player {
 	private ArrayList<Integer> selected;
 	private int rolls;
 	private static String diceFormat[][] = new String[7][5];
+	public int score;
+	
 	Player(){
 		lastRoll = new ArrayList<Integer>();
 		selected = new ArrayList<Integer>();
 		lives = 3;
 		rolls = 0;
+		score = 0;
 		diceFormat[1][0] = "┌───────┐";
 		diceFormat[1][1] = "‍‍‍│       │‍‍‍";
 		diceFormat[1][2] = "‍‍‍‍‍‍│   ●   │‍‍‍";
@@ -46,7 +49,7 @@ public class Player {
 	}
 	
 	public void rollDice() {			//this will be for (re-)rolling, not sure what we should do for parameters just yet
-		Random r = new Random(65);	//random value of "5" for double 6 testing
+		Random r = new Random();	//random value of "5" for double 6 testing
 		switch  (selected.size()){
 			case 0:
 				lastRoll.clear();
@@ -191,38 +194,40 @@ public class Player {
 		return false;
 	}
 	public int getScore(boolean isHigh) 
-	{	//get round score
-		//also need to check isHigh obviously
-		int sum = 0;
-		if(isSpecial() > 2)
-		{		
-			return -1;
-		}
-		if(isHigh == true)
-		{
-			for(int i: lastRoll)
-			{
-				if(i == 1) sum += 100;
-				else if(i == 6) sum += 60;
-				else sum += i;
-			}
-			for(int i: selected)
-			{
-				if(i == 1) sum += 100;
-				else if(i == 6) sum += 60;
-				else sum += i;
-			}
-			return sum;
-		}
-		else
-		{
-			for(int i: lastRoll)
-				sum += i;
-			for(int i: selected)
-				sum += i;
-			return sum;
-		}
-	}
+    {   //get round score
+        //also need to check isHigh obviously
+        int sum = 0;
+        if(isSpecial() > 2)
+        {       
+            return -1;
+        }
+        if(isHigh == true)
+        {
+            for(int i: lastRoll)
+            {
+                if(i == 1) sum += 100;
+                else if(i == 6) sum += 60;
+                else sum += i;
+            }
+            for(int i: selected)
+            {
+                if(i == 1) sum += 100;
+                else if(i == 6) sum += 60;
+                else sum += i;
+            }
+            score = sum;
+            return sum;
+        }
+        else
+        {
+            for(int i: lastRoll)
+                sum += i;
+            for(int i: selected)
+                sum += i;
+            score = sum;
+            return sum;
+        }
+    }
 	
 	public void selectDie(int num)
 	{
@@ -240,21 +245,22 @@ public class Player {
 		selected.remove(selected.indexOf(num));
 	}
 	
-	public void endRoll()
-	{
-		if(rolls < 4)
-		{
-			rollDice();
-		}
-		else
-			endTurn();
-	}
+	public void endRoll(boolean isHigh)
+    {
+        if(rolls < 4)
+        {
+            rollDice();
+        }
+        else
+            endTurn(isHigh);
+    }
 	
-	public void endTurn()
-	{
-		selected.clear();
-		rolls = 0;
-	}
+	public void endTurn(boolean isHigh)
+    {
+        getScore(isHigh);
+        selected.clear();
+        rolls = 0;
+    }
 	
 	public void printDieVals() {
 		if(!lastRoll.isEmpty()) System.out.println("Dice from cup: ");
