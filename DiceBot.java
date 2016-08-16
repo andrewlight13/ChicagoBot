@@ -11,6 +11,8 @@ public class DiceBot {
 	public static void main(String []args) {
 		players = new ArrayList<Player>();
 		Player p = new Player();
+		p.printFormattedDie(1, 2, 3);
+		p.printFormattedDie(4, 5, 6);
 		players.add(p);
 		p.rollDice();
 		players.get(0).printDieVals();

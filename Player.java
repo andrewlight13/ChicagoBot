@@ -7,12 +7,42 @@ public class Player {
 	private ArrayList<Integer> lastRoll;	//maybe make this an ordered list
 	private ArrayList<Integer> selected;
 	private int rolls;
-	
+	private static String diceFormat[][] = new String[7][5];
 	Player(){
 		lastRoll = new ArrayList<Integer>();
 		selected = new ArrayList<Integer>();
 		lives = 3;
 		rolls = 0;
+		diceFormat[1][0] = "┌───────┐";
+		diceFormat[1][1] = "‍‍‍│       │‍‍‍";
+		diceFormat[1][2] = "‍‍‍‍‍‍│   ●   │‍‍‍";
+		diceFormat[1][3] = "‍‍‍‍‍│       │‍‍‍";
+		diceFormat[1][4] = "‍‍‍└───────┘";
+		diceFormat[2][0] = "┌───────┐";
+		diceFormat[2][1] = "│ ●     │‍‍‍";
+		diceFormat[2][2] = "‍‍‍‍‍‍│       │‍‍‍";
+		diceFormat[2][3] = "‍‍‍‍‍│     ● │";
+		diceFormat[2][4] = "‍‍‍└───────┘";
+		diceFormat[3][0] = "┌───────┐";
+		diceFormat[3][1] = "│ ●     │";
+		diceFormat[3][2] = "│   ●   │";
+		diceFormat[3][3] = "│     ● │";
+		diceFormat[3][4] = "‍‍‍└───────┘";
+		diceFormat[4][0] = "┌───────┐";
+		diceFormat[4][1] = "│ ●   ● │‍‍‍";
+		diceFormat[4][2] = "‍‍‍‍‍‍│       │‍‍‍";
+		diceFormat[4][3] = "│ ●   ● │";
+		diceFormat[4][4] = "‍‍‍└───────┘";
+		diceFormat[5][0] = "┌───────┐";
+		diceFormat[5][1] = "│ ●   ● │";
+		diceFormat[5][2] = "‍‍‍‍‍‍│   ●   │‍‍‍";
+		diceFormat[5][3] = "│ ●   ● │";
+		diceFormat[5][4] = "‍‍‍└───────┘";
+		diceFormat[6][0] = "┌───────┐";
+		diceFormat[6][1] = "│ ●   ● │‍‍‍";
+		diceFormat[6][2] = "‍‍‍‍‍‍│ ●   ● │‍‍‍";
+		diceFormat[6][3] = "│ ●   ● │";
+		diceFormat[6][4] = "‍‍‍└───────┘";
 	}
 	
 	public void rollDice() {			//this will be for (re-)rolling, not sure what we should do for parameters just yet
@@ -238,6 +268,19 @@ public class Player {
 		{
 			if( i != 0)
 			System.out.println(i);
+		}
+	}
+	public void printFormattedDie(int a, int b, int c){
+		if(a == 0) return;
+		for(int j = 0; j < 5; j++){
+			System.out.print(diceFormat[a][j]);
+			if(b >= 1 && b <=6){
+				System.out.print(" " + diceFormat[b][j]);
+			}
+			if(c >= 1 && c <= 6){
+				System.out.print(" " + diceFormat[c][j]);
+			}
+			System.out.print("\n");
 		}
 	}
 }
