@@ -25,16 +25,18 @@ public class DiceBot {
 	public void gameOutput(String message){	//ezpz for now
 		System.out.println(message);
 	}
-	public int inputChecker(String input, String expected){	//in here, will check the input for what sort of command it is, against type "expected" (expected probably changed to enum or some shit like that)
+	public String inputChecker(String expected){	//in here, will check the input for what sort of command it is, against type "expected" (expected probably changed to enum or some shit like that)
 															//if expected command, returns true (or we could change this to just returning the input maybe)
 															//if not expected command, AND is valid alt command (quit etc.) then return false and handle that in other input parsers
 															//if not expected command, AND isn't recognized either, or unauthorized user, etc. return false or error state or w/e
 		
-		return 0;
+		return "todo";
 	}
-	public boolean getDiceRolls(){	//call this when you want to roll the dice on the user's command
-		
-		return false;
+	public int getSelectedDie(){	//expects a string returned from inputChecker
+		String input = inputChecker("selected");	//i'm thinking *not* doing strings for input checker after this lol
+		//then you parse "input" into an int
+		//then return that int into main, where it's needed
+		return 0;
 	}
 	// and then, a few more similar to this
 }

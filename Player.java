@@ -290,8 +290,3 @@ public class Player {
 		}
 	}
 }
-
-enum Reroll{		//should probably put this in its own file, but doesn't matter too much lol
-					//is kinda useless now i think ???
-	OOO, OOI, OIO, OII, IOO, IOI, III
-}
